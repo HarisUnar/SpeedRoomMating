@@ -59,24 +59,28 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
         try {
 
 
+            //get current event from eventsList
             Event currentEvent = eventList.get(position);
+
+            //get values of current event
             String cost = currentEvent.getCost();
             String venue = currentEvent.getVenue();
             String location = currentEvent.getLocation();
             String image = currentEvent.getImage_url();
             String phone = currentEvent.getPhone_number();
-
             String startTimeString = currentEvent.getStart_time();
             String endTimeString = currentEvent.getEnd_time();
-
             Date startTime = getDate(startTimeString);
             Date endTime = getDate(endTimeString);
+
+            // converting Date object into desired info of month day and time.
             String month = (String) DateFormat.format("MMMM", startTime); // Jun
             String day = (String) DateFormat.format("dd", startTime); // 20
             String fromTime = ((String) DateFormat.format("h:mm AA", startTime)).replace("am", ""); // 20
             fromTime = fromTime.replace("pm", "");
             String toTime = ((String) DateFormat.format("h:mm AA", endTime)).replace("pm", "PM"); // 20
             toTime = toTime.replace("am", "AM");
+
 
 
             char day_first = day.charAt(0);
