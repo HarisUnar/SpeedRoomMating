@@ -29,7 +29,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
     //*********************
 
     // Adapter of events for recyclerView
-    // And custom EventHolder for Adapter
+    // All the functionality related to eventsList loading into recyclerView
+    // And a custom EventHolder for Adapter
 
     //*********************
 
@@ -95,7 +96,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
 
             }
 
-            //Setting Texts of card
+            //Setting current event Text values to TextViews
             holder.venueView.setText(venue);
             holder.locationView.setText(location);
             holder.monthTopView.setText(month);
@@ -131,7 +132,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventHolder>
 
     }
 
+
+    //Function to return a Date object from a given date in string format
     public Date getDate(String dateString){
+
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");

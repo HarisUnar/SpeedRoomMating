@@ -91,7 +91,6 @@ public class UpcomingFragment extends Fragment {
 
     private void checkInternet() {
         if (InternetCheck.isConnected(getActivity())) {
-            //Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
 
             //loading data card set visible
             loadingCardsLayout.setVisibility(View.VISIBLE);
@@ -103,7 +102,6 @@ public class UpcomingFragment extends Fragment {
         } else {
             loadingCard.setVisibility(View.GONE);
             noInternetLayout.setVisibility(View.VISIBLE);
-            // Toast.makeText(getActivity(), "Not Connected", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -162,24 +160,20 @@ public class UpcomingFragment extends Fragment {
         compositeDisposable.add(apiService.getEvents()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-
-
                 .subscribe(events -> {
 
                     // checking for any empty events, if there is any empty event removing it from list
-                    for (int i = 0; i<events.size();i++){
+                    for (int i = 0; i < events.size(); i++) {
                         Event currentEvent = events.get(i);
-                        if (currentEvent.cost != null && !currentEvent.cost.equals("") && !currentEvent.cost.equals(" ")){
+                        if (currentEvent.cost != null && !currentEvent.cost.equals("") && !currentEvent.cost.equals(" ")) {
                             //nothing
-                        }else {
+                        } else {
                             events.remove(i);
                         }
                     }
 
-
                     //checking if events list has events or is empty
                     if (events.size() > 0) {
-
 
                         //Load events into recycler
                         loadRecycler(events);
@@ -188,51 +182,30 @@ public class UpcomingFragment extends Fragment {
                         new Handler().postDelayed(() -> loadingCard.setVisibility(View.GONE), 2000);
 
                     } else {
-                        noEventLayout.setVisibility(View.VISIBLE);
-                        loadingCardsLayout.setVisibility(View.GONE);
-                        loadingCard.setVisibility(View.GONE);
-
-
+                        //showing no event message
+                        noEvent();
                     }
 
                 }, throwable -> {
                     throwable.printStackTrace();
-                    errorLayout.setVisibility(View.VISIBLE);
-                    loadingCardsLayout.setVisibility(View.GONE);
-                    loadingCard.setVisibility(View.GONE);
-
+                    //showing error message
+                    onError();
 
                 }));
 
 
-             /*   .subscribe(new Observer<List<Event>>() {
+    }
 
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
+    private void onError() {
+        errorLayout.setVisibility(View.VISIBLE);
+        loadingCardsLayout.setVisibility(View.GONE);
+        loadingCard.setVisibility(View.GONE);
+    }
 
-                        compositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(@NonNull List<Event> events) {
-
-                        Toast.makeText(getActivity(), ""+events.size(), Toast.LENGTH_SHORT).show();
-
-                        loadRecycler(events);
-
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });*/
+    private void noEvent() {
+        noEventLayout.setVisibility(View.VISIBLE);
+        loadingCardsLayout.setVisibility(View.GONE);
+        loadingCard.setVisibility(View.GONE);
     }
 
     private void loadRecycler(List<Event> events) {
@@ -246,7 +219,6 @@ public class UpcomingFragment extends Fragment {
             loadingCardsLayout.setVisibility(View.GONE);
             eventRecyclerView.setVisibility(View.VISIBLE);
         }, 1000);
-
 
 
     }
